@@ -12,4 +12,5 @@ My primary goal is to build a strong foundation in Arduino development, gaining 
 
 ### Folder Structure
 The projects in the "Arduino-IDE-Projects" folder were created using the official Arduino IDE and are generally simpler experiments.
+
 The projects in the "PlatformIO-Projects" folder were created with PlatformIO, using the plugin on VS Code, and are typically more complex ideas (for example: more Unity integration).
