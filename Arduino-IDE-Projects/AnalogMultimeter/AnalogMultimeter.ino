@@ -1,17 +1,21 @@
+const int pin = A6;
 
 void setup() {
   Serial.begin(9600);
 
-  pinMode(A1, INPUT);
+  pinMode(pin, INPUT);
   pinMode(8, OUTPUT);
 }
 
 void loop() {
-  float V = analogRead(A1);
+  float value = analogRead(pin);
+  float voltage = (5./1023.) * value;
 
-  Serial.println((5./1023.) * V);
+  Serial.print("Raw Value: ");
+  Serial.print(value);
 
-  digitalWrite(8, V > 4 ? HIGH : LOW);
+  Serial.print(" ; Voltage: ");
+  Serial.println(voltage);
 
   delay(100);
 }
