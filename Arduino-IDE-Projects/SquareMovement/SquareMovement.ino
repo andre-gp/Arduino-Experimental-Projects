@@ -16,7 +16,7 @@ const uint16_t  Display_Color_Magenta      = 0xF81F;
 const uint16_t  Display_Color_Yellow       = 0xFFE0;
 const uint16_t  Display_Color_White        = 0xFFFF;
 
-#define Display_Background_Color Display_Color_Black
+#define Display_Background_Color Display_Color_Magenta
 
 class Player{
 
@@ -68,6 +68,7 @@ private:
 
   void DrawPlayer(uint16_t color){
     m_tft->fillRect(m_posX, m_posY, m_width, m_height, color);
+    //m_tft->drawRoundRect(m_posX, m_posY, m_width, m_height, m_width, color);
   }
 };
 
@@ -76,7 +77,7 @@ const int delayTime = 4000;
 // For 1.44" and 1.8" TFT with ST7735 use:
 Adafruit_ST7735 tft = Adafruit_ST7735(TFT_CS, TFT_DC, TFT_RST);
 
-Player player {5, 40, 80, 5, 5, Display_Color_White};
+Player player {5, 40, 80, 5, 5, Display_Color_Cyan};
 
 void setup() {
   Serial.begin(9600);
@@ -85,7 +86,7 @@ void setup() {
   tft.invertDisplay(true);
   tft.setRotation(1);
 
-  tft.fillScreen(Display_Color_Black);
+  tft.fillScreen(Display_Background_Color);
 
   player.Initialize(&tft);
 }
