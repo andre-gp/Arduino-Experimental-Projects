@@ -10,9 +10,9 @@ void setup() {
   
   for (int thisNote = 0; thisNote < sizeof(melody) / sizeof(int); thisNote++)
   {    
-    tone(11, melody[thisNote] * 2, noteDurations[thisNote] * .7);    
+    tone(4, melody[thisNote] * 2, noteDurations[thisNote] * .7);    
     delay(noteDurations[thisNote] * 0.8);    
-    noTone(11);
+    noTone(4);
   }
 }
 
