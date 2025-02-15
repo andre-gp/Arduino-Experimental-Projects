@@ -22,15 +22,19 @@ void waitInput(){
 }
 
 void loop() {
-  Serial.println("Type the first number: ");
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("Type 1st number:");
   waitInput();
   int num1 = Serial.parseInt();
 
-  Serial.println("Type the operation:");
+  lcd.clear();
+  lcd.print("Type operator");
   waitInput();
   String operation = Serial.readString();
 
-  Serial.println("Type the second number: ");
+  lcd.clear();
+  lcd.print("Type 2nd number: ");
   waitInput();
   int num2 = Serial.parseInt();
   
@@ -45,6 +49,8 @@ void loop() {
   if(operation == "/")
     result = num1 / num2;
 
+  lcd.clear();
+
   lcd.setCursor(0, 0);
   lcd.print("Result:");
   lcd.setCursor(0, 1);
@@ -54,5 +60,5 @@ void loop() {
   lcd.print(" = ");
   lcd.print(result);
 
-
+  delay(8000);
 }
