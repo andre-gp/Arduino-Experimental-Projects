@@ -2,10 +2,16 @@
 #include <MD_MAX72xx.h>
 #include <snakeGameModule.h>
 
-/* TODO 
-   - Game Over
-   - Stop Spawning Fruit on body   
-*/
+// Buzzer
+#define BUZZER_PIN 2
+#define SOUND_DURATION 200
+
+bool isPlayingSound = false;
+unsigned long soundStartTime; 
+
+// W A S D
+uint8_t pins[] = {4, 7, A5, A2 };
+Vector2 directions[] = {{-1, 0}, {0,1}, {1, 0}, {0, -1}};
 
 
 #define  DELAYTIME  120  //Controla a velocidade em que o texto se desloca
@@ -18,19 +24,21 @@ MD_MAX72XX leds(MD_MAX72XX::GENERIC_HW, DATA_PIN, CLK_PIN, CS_PIN, MODULES_NUM);
 
 int currentNum = 0;
 
-SnakeGame snakeGame(Vector2{8,8}, 1000);
+SnakeGame snakeGame(Vector2{8,8}, 250, true);
 
-bool OnDraw(const Vector2& pos)
+bool onGetPoint(const Vector2& pos)
 {
-    leds.setPoint(pos.x, pos.y, true);
-    return;
-    Serial.print("Draw at ");
-    Serial.print(pos.x);
-    Serial.print(",");
-    Serial.println(pos.y);
+    soundStartTime = millis();
+    isPlayingSound = true;    
+    digitalWrite(BUZZER_PIN, HIGH);
 }
 
-bool OnErase(const Vector2& pos)
+bool onDraw(const Vector2& pos)
+{
+    leds.setPoint(pos.x, pos.y, true);
+}
+
+bool onErase(const Vector2& pos)
 {
   leds.setPoint(pos.x, pos.y, false);
 }
@@ -38,42 +46,44 @@ bool OnErase(const Vector2& pos)
 void setup() 
 {
   Serial.begin(9600);
+  
+  pinMode(BUZZER_PIN, OUTPUT);
+  
+  for (size_t i = 0; i < 4; i++)
+  {
+    pinMode(pins[i], INPUT_PULLUP);
+  }
+  
 
   leds.begin();
   leds.control(MD_MAX72XX::INTENSITY, 1);
 
-  delay(2000);
 
-  snakeGame.getRenderEngine().BindFunctions(&OnDraw, &OnErase);
+  snakeGame.getRenderEngine().BindFunctions(&onDraw, &onErase, &onGetPoint);
 
   snakeGame.startGame();
+
+  
+  delay(1500);
 }
 
 void loop()
 {
   snakeGame.gameLoop();
-
-  if(Serial.available())
+  
+  if(isPlayingSound && millis() > soundStartTime + SOUND_DURATION) 
   {
-      int dir = Serial.parseInt();
+      isPlayingSound = false;
+      digitalWrite(BUZZER_PIN, LOW);
+  }
 
-      if(dir == 4)
-      {
-          snakeGame.setDirection({1, 0});
-      }
-      if(dir == 6)
-      {
-        snakeGame.setDirection({-1, 0});
-      }
-
-      if(dir == 8)
-      {
-        snakeGame.setDirection({0, 1});
-      }
-
-      if(dir == 2)
-      {
-        snakeGame.setDirection({0, -1});
-      }
+  for (size_t i = 0; i < 4; i++)
+  {
+    if(digitalRead(pins[i]) == LOW)
+    {
+        snakeGame.setDirection(directions[i]);
+        
+        Serial.println("Changed dir");
+    }
   }
 }
