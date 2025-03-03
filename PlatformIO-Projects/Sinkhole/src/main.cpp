@@ -13,8 +13,8 @@
 std::set<String> blockedDomainsSet;
 
 // WiFi Connection
-const char* ssid = "3wP).%1bfchb8z";
-const char* password = "tadoladodageladeira";
+const char* ssid = "ssid";
+const char* password = "pw";
 
 // Cloudfare DNS
 const IPAddress DNS_SERVER(1, 1, 1, 1);
