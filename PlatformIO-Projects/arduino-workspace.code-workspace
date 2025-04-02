@@ -1,0 +1,35 @@
+{
+	"folders": [
+		{
+			"name": "WeatherLog",
+			"path": "WeatherLog"
+		},
+		{
+			"name": "LEDMatrixDebug",
+			"path": "LEDMatrixDebug"
+		},
+		{
+			"name": "Snake",
+			"path": "Snake"
+		},
+		{
+			"name": "Sinkhole",
+			"path": "Sinkhole"
+		},
+		{
+			"name": "RFID-ValidateEntrance",
+			"path": "RFID-ValidateEntrance"
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"iterator": "cpp",
+			"xhash": "cpp",
+			"xtree": "cpp",
+			"xutility": "cpp",
+			"chrono": "cpp",
+			"algorithm": "cpp",
+			"random": "cpp"
+		}
+	}
+}
